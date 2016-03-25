@@ -2,9 +2,9 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki sovellukseeni](http://katukatu.users.cs.helsinki.fi/tsoha_tmkau)
+* [Linkki dokumentaatiooni](https://github.com/tmkau/Tsoha-Bootstrap)
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](https://github.com/tmkau/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf) 
