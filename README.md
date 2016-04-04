@@ -9,7 +9,7 @@ Yleisiä linkkejä:
 * [Linkki askarelistaan](http://katukatu.users.cs.helsinki.fi/tsoha_tmkau/askarelista)
 
 
-* [Linkki dokumentaatiooni](https://github.com/tmkau/Tsoha-Bootstrap)
+* [Linkki dokumentaatiooni](https://github.com/tmkau/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 
 ## Työn aihe on Muistilista
