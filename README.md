@@ -12,6 +12,6 @@ Yleisiä linkkejä:
 * [Linkki dokumentaatiooni](https://github.com/tmkau/Tsoha-Bootstrap)
 
 
-## Työn aihe
+## Työn aihe on Muistilista
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](https://github.com/tmkau/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf) 
+Tässä kuvaus: [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Muistilista.html) 
