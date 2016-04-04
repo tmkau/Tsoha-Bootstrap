@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
+
                 {% extends "base.html" %}
         {% block content %}
         <h1>Askareet</h1>
@@ -28,21 +16,24 @@ and open the template in the editor.
                     <th>Nimi</th>
                     <th>Deadline</th>
                     <th>Kuvaus</th>
+                    <th> Muokkaus </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Listataan pelit tähän -->
                 <tr>
-                    <td><a href="#">The Elder Scrolls V: Skyrim</a></td>
-                    <td>11.11.2011</td>
-                    <td>Bethesda Softworks</td>
-                    <td><label class="label label-danger">kesken</label></td>
-                    <td>9.12.2014</td>
-                    <th><a class="btn btn-default btn-sm" href="#">Muokkaa</a></th>
+                    <td><a href="#">Hammaslääkäri</a></td>
+                    <td>02.02.2016</td>
+                    <td> huone 2014, Meitsi Meikäläinen </td>
+                    <td><a class="btn btn-default btn-sm" href="#">Muokkaa</a></td>
                 </tr>
+                <tr> 
+                    <td><a href="#">Laskarit</a></td>
+                     <td>01.01.2016</td>
+                     <td> Logiikka </td>
+                    <td><a class="btn btn-default btn-sm" href="#">Muokkaa</a></td>
+
             </tbody>
         </table>
         {% endblock %}
-    </body>
-</html>
+
