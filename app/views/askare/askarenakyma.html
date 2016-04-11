@@ -1,6 +1,10 @@
 
 {% extends "base.html" %}
 {% block content %}
+<div class="alert alert-success">
+    {{message}}
+</div>
+
 <h1>{{askare.askare_nimi}}</h1>
 
 <p> <button class="btn btn-danger">Poista</button> <a href="app/views/askaremuokkaus" class="btn btn-default">Muokkaa</a>
