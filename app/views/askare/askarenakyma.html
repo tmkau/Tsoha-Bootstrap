@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h1>{{askare.askare_nimi}}</h1>
+
+<p> <button class="btn btn-danger">Poista</button> <a href="app/views/askaremuokkaus" class="btn btn-default">Muokkaa</a>
+</p>
+<ul>
+    <li><strong>Askareen dedis:</strong> {{askare.deadline}} </li>
+    <li><strong>Kuvaus:</strong>  {{askare.kuvaus}}</li>
+</ul>
+
+{% endblock %}
+

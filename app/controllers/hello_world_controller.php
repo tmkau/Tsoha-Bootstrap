@@ -1,5 +1,7 @@
 <?php
 
+ require 'app/models/askare.php';
+
 class HelloWorldController extends BaseController {
 
     public static function index() {
@@ -8,7 +10,10 @@ class HelloWorldController extends BaseController {
     }
 
     public static function sandbox() {
-        View::make('helloworld.html');
+        $hammas = askare::find(1);
+        $askareet = askare::all();
+        Kint::dump($hammas);
+        Kint::dump($askareet);
     }
 
     public static function askarelista() {
@@ -22,9 +27,9 @@ class HelloWorldController extends BaseController {
     public static function askarenakyma() {
         View::make('askarenakyma.html');
     }
-        public static function kirjautumissivu() {
-            View::make('kirjautumissivu.html');
-        }
+
+    public static function kirjautumissivu() {
+        View::make('kirjautumissivu.html');
     }
 
-
+}

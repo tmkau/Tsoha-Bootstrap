@@ -8,17 +8,29 @@ $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
 });
 
-$routes->get('/askarelista', function() {
-    HelloWorldController::askarelista();
+$routes->get('/askare/askarelista', function() {
+    AskareetController::askarelista();
 });
-$routes->get('/askarenakyma', function() {
-    HelloWorldController::askarenakyma();
+$routes->get('/askare/askarenakyma/:id', function($askare_id) {
+    AskareController::askarenakyma($askare_id);
 });
 
-$routes->get('/askaremuokkaus', function() {
+$routes->get('/askare/askaremuokkaus', function() {
     HelloWorldController::askaremuokkaus();
 });
-$routes->get('/kirjautumissivu', function() {
+$routes->get('/index', function() {
+    AskareetController::askarelista();
+});
+$routes->get('/askare/kirjautumissivu', function() {
     HelloWorldController::kirjautumissivu();
 });
+
+$routes->post('/askare', function() {
+    AskareController::tallenna();
+});
+
+$routes->get('/askare/uusi', function() {
+    AskareController::uusi();
+});
+
 
