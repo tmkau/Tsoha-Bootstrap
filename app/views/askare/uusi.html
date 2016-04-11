@@ -2,24 +2,26 @@
 {% block content %}
 <h1>Uusi askare:</h1>
 
-<form method="post" action="{{base_path}}">
+<form method="post" action="{{base_path}}/askare">
     <div class="form-group">
         <label>Askareen nimi</label>
-        <input name="name" class="form-control" type="text">
+        <input name="askare_nimi" class="form-control" type="text">
     </div>
 
     <div class="form-group">
         <label> Askareen deadline. (pp.kk.vvvv) </label>
-        <input name="name" class="form-control" type="text">
+        <input name="deadline" class="form-control" type="text">
     </div>
     
     <div class="form-group">
         <label> Askareen kuvaus </label>
-        <input name="name" class="form-control" type="text">
+        <input name="kuvaus" class="form-control" type="text">
     </div>
     
     <div class="form-group">
       <button type="submit" class="btn btn-primary">Tallenna</button>
     </div>
+    
+</form>
     
     {% endblock %}

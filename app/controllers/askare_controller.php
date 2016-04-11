@@ -21,7 +21,7 @@ class AskareController extends BaseController {
             ));
         Kint::dump($params);
         $askare->save();
-       // Redirect::to('/askare/'.$askare->askare_id, array('message' => 'Askare on nyt muistilistalla!'));
+        Redirect::to('/askare/'.$askare->askare_id, array('message' => 'Askare on nyt muistilistalla!'));
     }
     
 }
