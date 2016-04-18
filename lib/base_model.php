@@ -17,13 +17,20 @@
 
     public function errors(){
       // Lisätään $errors muuttujaan kaikki virheilmoitukset taulukkona
-      $errors = array();
+       $virheet = array();
+      // $nimen_validointi = 'nimen_validointi';
+      // $deadline_validointi = 'deadline_validointi';
 
       foreach($this->validators as $validator){
+         
+    //      $this->{$nimen_validointi}();
+   //       $this-> {$deadline_validointi}();
+          
+         $virheet = array_merge($virheet, $this -> {$validator}());
         // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
       }
 
-      return $errors;
+      return $virheet;
     }
 
   }

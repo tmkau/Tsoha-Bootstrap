@@ -1,6 +1,6 @@
 <?php
 
- require 'app/models/askare.php';
+require 'app/models/askare.php';
 
 class HelloWorldController extends BaseController {
 
@@ -10,10 +10,14 @@ class HelloWorldController extends BaseController {
     }
 
     public static function sandbox() {
-        $hammas = askare::find(1);
-        $askareet = askare::all();
-        Kint::dump($hammas);
-        Kint::dump($askareet);
+        $doom = new Askare(array(
+        'askare_nimi' => 'dump',
+        'deadline' => 'tänään',
+        'kuvaus' => 'jotain'
+        ));
+        $errors = $doom->errors();
+        Kint::dump($doom);
+        Kint::dump($errors);
     }
 
     public static function askarelista() {

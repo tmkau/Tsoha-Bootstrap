@@ -2,26 +2,36 @@
 {% block content %}
 <h1>Uusi askare:</h1>
 
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 <form method="post" action="{{base_path}}/askare">
     <div class="form-group">
         <label>Askareen nimi</label>
-        <input name="askare_nimi" class="form-control" type="text">
+        <input name="askare_nimi" class="form-control" type="text" value = "{{attributes.askare_nimi}}">
     </div>
 
     <div class="form-group">
-        <label> Askareen deadline. (pp.kk.vvvv) </label>
-        <input name="deadline" class="form-control" type="text">
+        <label> Askareen deadline. (pp-kk-vvvv) </label>
+        <input name="deadline" class="form-control" type="text" value = "{{attributes.deadline}}">
     </div>
-    
+
     <div class="form-group">
         <label> Askareen kuvaus </label>
-        <input name="kuvaus" class="form-control" type="text">
+        <input name="kuvaus" class="form-control" type="text" value = "{{attributes.kuvaus}}">
     </div>
-    
+
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Tallenna</button>
+        <button type="submit" class="btn btn-primary">Tallenna</button>
     </div>
-    
+
 </form>
-    
-    {% endblock %}
+
+{% endblock %}
