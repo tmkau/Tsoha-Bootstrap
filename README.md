@@ -15,3 +15,5 @@ Yleisiä linkkejä:
 ## Työn aihe on Muistilista
 
 Tässä kuvaus: [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Muistilista.html) 
+
+##Testaamista varten tunnus on: Heikki ja salasana on: Heikki123
