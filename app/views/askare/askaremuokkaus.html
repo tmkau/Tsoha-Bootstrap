@@ -1,22 +1,33 @@
-      {% extends "base.html" %}
-        {% block content %}
-        <h1>Muokkaa askaretta Hammaslääkäri</h1>
+{% extends "base.html" %}
+{% block content %}
 
-        <form>
-            <div class="form-group">
-                <label>Nimi</label>
-                <input class="form-control" value="Hammaslääkäri" type="text">
-            </div>
-            <div class="form-group">
-                <label>Deadline, kirjoita muodossa pp.kk.vvvv</label>
-                <input class="form-control" value="02.02.2016" type="text">
-            </div>
-            <div class="form-group">
-                <label>Kuvaus</label>
-                <input class="form-control" value="Huone 2014, lääkäri Meitsi Meikäläinen" type="text">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Tallenna</button>
-            </div>
-        </form>
-        {% endblock %}   
+<h1>Muokkaa askaretta {{askare.askare_nimi}}</h1>
+
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<form method="post" action="{{base_path}}/askare/askaremuokkaus/{{askare.askare_id}}">
+    <div class="form-group">
+        <label>Nimi</label>
+        <input name ="askare_nimi" class="form-control" value="{{askare.askare_nimi}}">
+    </div>
+    <div class="form-group">
+        <label>Deadline, kirjoita muodossa vvvv-kk-pp</label>
+        <input name = "deadline" class="form-control" value="{{askare.deadline}}">
+    </div>
+    <div class="form-group">
+        <label>Kuvaus</label>
+        <input name ="kuvaus" class="form-control" value="{{askare.kuvaus}}">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Tallenna</button>
+    </div>
+</form>
+{% endblock %}   

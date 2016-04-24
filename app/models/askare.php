@@ -7,6 +7,7 @@ class Askare extends BaseModel {
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('nimen_validointi', 'deadline_validointi');
+        
     }
 
     public static function all() {
@@ -51,6 +52,20 @@ class Askare extends BaseModel {
         $row = $query->fetch();
         $this->askare_id = $row['askare_id'];
     }
+    
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Askare SET askare_nimi = :askare_nimi, deadline = :deadline, kuvaus = :kuvaus WHERE askare_id = :askare_id');
+        $query-> execute(array('askare_id' => $this-> askare_id, 'askare_nimi' => $this->askare_nimi, 'deadline' => $this->
+            deadline, 'kuvaus' => $this->kuvaus));
+        $row = $query->fetch();
+        
+    }
+      
+	public function delete() {
+	  $query = DB::connection()->prepare('DELETE FROM Askare WHERE askare_id = :askare_id');
+	  $query->execute(array('askare_id' => $this->askare_id));
+	  $row = $query->fetch();
+	}
 
     public function nimen_validointi() {
         $errors = array();
@@ -67,8 +82,8 @@ class Askare extends BaseModel {
     public function deadline_validointi() {
         $errors = array();
         // $date = $this->deadline;
-        if (!preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-([0-9]{4})$/", $this->deadline)) {
-            $errors[] = 'Päiväyksen muodon pitää olla pp-kk-vvvv!';
+        if (!preg_match("/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $this->deadline)) {
+            $errors[] = 'Päiväyksen muodon pitää olla vvvv-kk-pp!';
         }
 
         return $errors;
@@ -77,10 +92,4 @@ class Askare extends BaseModel {
 
 
 }
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
