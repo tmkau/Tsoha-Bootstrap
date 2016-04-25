@@ -2,17 +2,17 @@
 
 class Askare extends BaseModel {
 
-    public $askare_id, $askare_nimi, $deadline, $kuvaus;
+    public $askare_id, $askare_nimi, $deadline, $kuvaus, $kayttaja_id;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('nimen_validointi', 'deadline_validointi');
-        
+       
     }
 
-    public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Askare');
-        $query->execute();
+    public static function all($kayttaja_id) {
+        $query = DB::connection()->prepare('SELECT * FROM Askare WHERE kayttaja_id = :kayttaja_id');
+        $query->execute(array('kayttaja_id'=>$kayttaja_id));
         $rows = $query->fetchAll();
         $askareet = array();
 
@@ -21,7 +21,8 @@ class Askare extends BaseModel {
                 'askare_id' => $row['askare_id'],
                 'askare_nimi' => $row['askare_nimi'],
                 'deadline' => $row['deadline'],
-                'kuvaus' => $row['kuvaus']
+                'kuvaus' => $row['kuvaus'],
+                'kayttaja_id' => $row['kayttaja_id']
             ));
         }
 
@@ -46,9 +47,9 @@ class Askare extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Askare(askare_nimi, deadline, kuvaus) VALUES (:askare_nimi, :deadline, :kuvaus) RETURNING askare_id');
+        $query = DB::connection()->prepare('INSERT INTO Askare(askare_nimi, deadline, kuvaus, kayttaja_id) VALUES (:askare_nimi, :deadline, :kuvaus, :kayttaja_id) RETURNING askare_id');
         $query->execute(array('askare_nimi' => $this->askare_nimi, 'deadline' => $this->
-            deadline, 'kuvaus' => $this->kuvaus));
+            deadline, 'kuvaus' => $this->kuvaus, 'kayttaja_id' => $this->kayttaja_id));
         $row = $query->fetch();
         $this->askare_id = $row['askare_id'];
     }

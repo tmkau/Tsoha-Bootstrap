@@ -1,17 +1,29 @@
-         {% extends "base.html" %} 
-          {% block content %}      
-        <h1> Kirjautuminen muistilistaan </h2> 
-        <form method = "post" action="{{base_path}}/kayttaja/login">
-            <div class="form-group">
-                <label>Käyttäjätunnus</label>
-                <input class="form-control" type="text" name = "kayttaja_nimi" value = "{{kayttaja_nimi}}">
-            </div>
-            <div class="form-group">
-                <label>Salasana</label>
-                <input class="form-control" type="password" name = "salasana" value = "{{salasana}}">
-            </div>
+{% extends "base.html" %} 
+{% block content %}      
+<h1> Kirjautuminen muistilistaan </h2> 
 
-            <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
-        </form>
-        {% endblock %}
+{% if errors %}
+<div class="alert alert-danger">
+    {% for error in errors %}
+    {{error}}
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="alert alert-success">
+    {{message}}
+</div>
+<form method = "post" action="{{base_path}}/kayttaja/login">
+    <div class="form-group">
+        <label>Käyttäjätunnus</label>
+        <input class="form-control" type="text" name = "kayttaja_nimi" value = "{{kayttaja_nimi}}">
+    </div>
+    <div class="form-group">
+        <label>Salasana</label>
+        <input class="form-control" type="password" name = "salasana" value = "{{salasana}}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
+</form>
+{% endblock %}
 

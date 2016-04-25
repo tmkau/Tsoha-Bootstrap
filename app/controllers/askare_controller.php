@@ -5,26 +5,34 @@ require 'app/models/askare.php';
 class AskareController extends BaseController {
 
     public static function askarenakyma($askare_id) {
+        self::check_logged_in();
         $askare = Askare::find($askare_id);
         Kint::dump($askare);
         View::make('askare/askarenakyma.html', array('askare' => $askare));
     }
 
     public static function askarelista() {
-        $askareet = Askare::all();
+        self::check_logged_in();
+        $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
+        $askareet = Askare::all($kayttaja_id);
         View::make('askare/askarelista.html', array('askareet' => $askareet));
     }
 
     public static function uusi() {
+        self::check_logged_in();
         View::make('askare/uusi.html');
     }
 
     public function tallenna() {
+        self::check_logged_in();
+        $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
+
         $params = $_POST;
         $attributes = array(
             'askare_nimi' => $params['askare_nimi'],
             'deadline' => $params['deadline'],
-            'kuvaus' => $params['kuvaus']
+            'kuvaus' => $params['kuvaus'],
+            'kayttaja_id' => $kayttaja_id
         );
         $askare = new Askare($attributes);
         $errors = $askare->errors();
@@ -37,12 +45,14 @@ class AskareController extends BaseController {
     }
 
     public static function muokkaa($askare_id) {
+        self::check_logged_in();
         $askare = Askare::find($askare_id);
         Kint::dump($askare);
         View::make('askare/askaremuokkaus.html', array('askare' => $askare));
     }
 
     public static function paivita($askare_id) {
+        self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(
@@ -54,9 +64,8 @@ class AskareController extends BaseController {
 
         $askare = new Askare($attributes);
         $errors = $askare->errors();
-        if (count($errors) > 0) {  
+        if (count($errors) > 0) {
             View::make('askare/askaremuokkaus.html', array('errors' => $errors, 'askare' => $askare));
-     
         } else {
             $askare->update();
             Redirect::to('/askare/askarenakyma/' . $askare->askare_id, array('message' => 'Askaretta on muokattu, jee!'));
@@ -64,6 +73,7 @@ class AskareController extends BaseController {
     }
 
     public static function poista($askare_id) {
+        self::check_logged_in();
         $askare = new Askare(array('askare_id' => $askare_id));
         $askare->delete();
         Redirect::to('/askare/askarelista', array('message' => 'Askare on nyt poistettu!'));

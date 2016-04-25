@@ -11,15 +11,12 @@ $routes->get('/hiekkalaatikko', function() {
 $routes->get('/askare/askarelista', function() {
     AskareController::askarelista();
 });
-$routes->get('/askare/askarenakyma/:id', function($askare_id) {
+$routes->get('/askare/askarenakyma/:askare_id', function($askare_id) {
     AskareController::askarenakyma($askare_id);
 });
 
 $routes->get('/index', function() {
     AskareController::askarelista();
-});
-$routes->get('/askare/kirjautumissivu', function() {
-    HelloWorldController::kirjautumissivu();
 });
 
 $routes->post('/askare', function() {
@@ -29,7 +26,7 @@ $routes->post('/askare', function() {
 $routes->get('/askare/uusi', function() {
     AskareController::uusi();
 });
-$routes->get('/askare/askaremuokkaus/:askare_id', function($askare_id) {
+$routes->get('/askare/askaremuokkaus/:askare_id',function($askare_id) {
     AskareController::muokkaa($askare_id);
 });
 $routes->post('/askare/askaremuokkaus/:askare_id', function($askare_id) {
@@ -46,6 +43,10 @@ $routes->get('/kayttaja/login', function() {
 
 $routes->post('/kayttaja/login', function() {
     KayttajaController::kirjaudu();
+});
+
+$routes->post('/kayttaja/logout', function() {
+   KayttajaController::logout();
 });
 
 

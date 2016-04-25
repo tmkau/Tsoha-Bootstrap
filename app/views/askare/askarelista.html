@@ -13,8 +13,10 @@
        " class="btn btn-success">Lisää askare</a>
 </p>
 
-  {% if get_user_logged_in %}
-<p> Käyttäjän nimi: {{get_user_logged_in.kayttaja_nimi}} 
+
+  {% if user_logged_in %}
+<p> Käyttäjän nimi: {{user_logged_in.kayttaja_nimi}}
+    {{user_logged_in.kayttaja_id}}
 </p> 
   {% endif %}
 
