@@ -16,15 +16,32 @@ class Askare extends BaseModel {
         $askareet = array();
 
         foreach ($rows as $row) {
+            $kysely = DB::connection()->prepare('SELECT DISTINCT Luokka.luokka_nimi, Luokka.luokka_id FROM'
+                    . ' Askare, Askareen_luokka, Luokka WHERE Askare.askare_id'
+                    . '=Askareen_luokka.askare_id AND Luokka.luokka_id'
+                    . '=Askareen_luokka.luokka_id AND Askare.askare_id=:askare_id');
+            $kysely->execute(array('askare_id' => $row['askare_id']));
+            $rivit = $kysely->fetchAll();
+            $luokat = array();
+
+            foreach ($rivit as $rivi) {
+                $luokat[] = new Luokka(array(
+                    'luokka_id' => $rivi['luokka_id'],
+                    'luokka_nimi' => $rivi['luokka_nimi']
+                ));
+            }
+
             $askareet[] = new Askare(array(
                 'askare_id' => $row['askare_id'],
                 'askare_nimi' => $row['askare_nimi'],
                 'deadline' => $row['deadline'],
                 'kuvaus' => $row['kuvaus'],
-                'kayttaja_id' => $row['kayttaja_id']
+                'kayttaja_id' => $row['kayttaja_id'],
+                'luokat' => $luokat
             ));
-        }
 
+            unset($luokat);
+        }
         return $askareet;
     }
 
@@ -55,9 +72,8 @@ class Askare extends BaseModel {
         foreach ($this->luokat as $luokka) {
             $kysely = DB::connection()->prepare('INSERT INTO 
          Askareen_luokka(luokka_id, askare_id) VALUES (:luokka, :askare_id)');
-         $kysely->execute(array('luokka' => $luokka, 'askare_id' => $this->askare_id));
-         $rivi = $kysely->fetch();
-                  
+            $kysely->execute(array('luokka' => $luokka, 'askare_id' => $this->askare_id));
+            $rivi = $kysely->fetch();
         }
     }
 
