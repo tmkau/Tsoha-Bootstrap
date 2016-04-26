@@ -49,5 +49,9 @@ $routes->post('/kayttaja/logout', function() {
    KayttajaController::logout();
 });
 
+$routes->get ('/luokka/luokkalista', function(){
+    LuokkaController::luokkalista();
+}); 
+
 
 

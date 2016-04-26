@@ -8,16 +8,17 @@ class Luokka extends BaseModel {
         parent::__construct($attributes);
     }
 
-    public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Luokka');
-        $query->execute();
+    public static function all($kayttaja_id) {
+        $query = DB::connection()->prepare('SELECT * FROM Luokka WHERE kayttaja_id = :kayttaja_id');
+        $query->execute(array('kayttaja_id' =>$kayttaja_id));
         $rows = $query->fetchAll();
         $luokat = array();
 
         foreach ($rows as $row) {
             $luokat[] = new Luokka (array(
                 'luokka_id' => $row['luokka_id'],
-                'luokka_nimi' => $row['luokka_nimi']
+                'luokka_nimi' => $row['luokka_nimi'],
+                'kayttaja_id' => $row['kayttaja_id']
             ));
         }
         return $luokat;

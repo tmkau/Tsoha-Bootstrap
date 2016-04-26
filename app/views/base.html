@@ -39,19 +39,23 @@
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="nav navbar-nav">
                         <!-- Navigaation linkit -->
-                        <li><a href="{{base_path}}/askare/askarelista">Askareet</a></li>
+                        <li><a href="{{base_path}}/askare/askarelista">Askarelista</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav">
+                        <!-- Navigaation linkit -->
+                        <li><a href="{{base_path}}/luokka/luokkalista">Luokkien hallinta</a></li>
                     </ul>
 
-  
-                        {% if user_logged_in %}
-                        <form class="navbar-form navbar-right" method="post" action="{{base_path}}/kayttaja/logout">
-                            <button type="submit" class="btn btn-default">Kirjaudu ulos</button>
-                        </form>
-                        {% else %}
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{{base_path}}/kayttaja/login">Kirjaudu sisään</a></li>
-                        </ul>
-                        {% endif %}
+
+                    {% if user_logged_in %}
+                    <form class="navbar-form navbar-right" method="post" action="{{base_path}}/kayttaja/logout">
+                        <button type="submit" class="btn btn-default">Kirjaudu ulos</button>
+                    </form>
+                    {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{base_path}}/kayttaja/login">Kirjaudu sisään</a></li>
+                    </ul>
+                    {% endif %}
 
                 </div>
             </div>
