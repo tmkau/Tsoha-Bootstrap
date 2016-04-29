@@ -8,6 +8,7 @@ class AskareController extends BaseController {
     public static function askarenakyma($askare_id) {
         self::check_logged_in();
         $askare = Askare::find($askare_id);
+                Kint::dump($askare);
         View::make('askare/askarenakyma.html', array('askare' => $askare));
     }
 
@@ -38,6 +39,7 @@ class AskareController extends BaseController {
                 'askare_nimi' => $params['askare_nimi'],
                 'deadline' => $params['deadline'],
                 'kuvaus' => $params['kuvaus'],
+                'prioriteetti' => $params['prioriteetti'],
                 'kayttaja_id' => $kayttaja_id
             );
         } else {
@@ -47,6 +49,7 @@ class AskareController extends BaseController {
             'askare_nimi' => $params['askare_nimi'],
             'deadline' => $params['deadline'],
             'kuvaus' => $params['kuvaus'],
+            'prioriteetti' => $params['prioriteetti'], 
             'kayttaja_id' => $kayttaja_id,
             'luokat' => array()
         );
@@ -86,6 +89,7 @@ class AskareController extends BaseController {
             'askare_nimi' => $params['askare_nimi'],
             'deadline' => $params['deadline'],
             'kuvaus' => $params['kuvaus'],
+            'prioriteetti' => $params['prioriteetti'],
             'luokat' => array()
         );
 

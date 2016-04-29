@@ -37,6 +37,7 @@ class Askare extends BaseModel {
                 'askare_nimi' => $row['askare_nimi'],
                 'deadline' => $row['deadline'],
                 'kuvaus' => $row['kuvaus'],
+                'prioriteetti' => $row['prioriteetti'],
                 'kayttaja_id' => $row['kayttaja_id'],
                 'luokat' => $luokat
             ));
@@ -56,7 +57,8 @@ class Askare extends BaseModel {
                 'askare_id' => $row['askare_id'],
                 'askare_nimi' => $row['askare_nimi'],
                 'deadline' => $row['deadline'],
-                'kuvaus' => $row['kuvaus']
+                'kuvaus' => $row['kuvaus'],
+                'prioriteetti' => $row['prioriteetti']
             ));
             return $askare;
         }
@@ -66,7 +68,7 @@ class Askare extends BaseModel {
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Askare(askare_nimi, deadline, kuvaus, kayttaja_id) VALUES (:askare_nimi, :deadline, :kuvaus, :kayttaja_id) RETURNING askare_id');
         $query->execute(array('askare_nimi' => $this->askare_nimi, 'deadline' => $this->
-            deadline, 'kuvaus' => $this->kuvaus, 'kayttaja_id' => $this->kayttaja_id));
+            deadline, 'kuvaus' => $this->kuvaus,'prioriteetti' => $this->prioriteetti, 'kayttaja_id' => $this->kayttaja_id));
         $row = $query->fetch();
         $this->askare_id = $row['askare_id'];
 
@@ -81,7 +83,7 @@ class Askare extends BaseModel {
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE Askare SET askare_nimi = :askare_nimi, deadline = :deadline, kuvaus = :kuvaus WHERE askare_id = :askare_id');
+        $query = DB::connection()->prepare('UPDATE Askare SET askare_nimi = :askare_nimi, deadline = :deadline, kuvaus = :kuvaus, prioriteetti = :prioriteetti WHERE askare_id = :askare_id');
         $query->execute(array('askare_id' => $this->askare_id, 'askare_nimi' => $this->askare_nimi, 'deadline' => $this->
             deadline, 'kuvaus' => $this->kuvaus));
         $row = $query->fetch();

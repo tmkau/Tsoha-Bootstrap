@@ -25,10 +25,12 @@
         <tr>
             <th>Nimi</th>
             <th>Deadline</th>
-            <th>Kuvaus</th>
-            <th> Muokkaus </th>
+            <th>Kuvaus</th>    
+            <th> Prioriteetti </th>
             <th> Luokat </th>
+            <th> Muokkaus </th>
             <th> Toiminnot </th>
+
         </tr>
     </thead>
     <tbody>      
@@ -38,8 +40,9 @@
             <td> <a href="{{base_path}}/askare/askarenakyma/{{askare.askare_id}}">{{askare.askare_nimi}}</td>
             <td>{{askare.deadline}}</td>
             <td> {{askare.kuvaus}} </td>
-            <td> <a href="{{base_path}}/askare/askaremuokkaus/{{askare.askare_id}}">Muokkaa</td>
+            <td> {{askare.prioriteetti}} </td>   
             <td>{% for luokka in askare.luokat %}{{luokka.luokka_nimi}} {% endfor %}</td>
+            <td> <a href="{{base_path}}/askare/askaremuokkaus/{{askare.askare_id}}">Muokkaa</td>
             <td>  {{forms.destroy_button("#{base_path}/askare/poista/#{askare.askare_id}")}} </td>
         </tr>
         {% endfor %}
