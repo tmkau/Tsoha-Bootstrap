@@ -16,7 +16,7 @@ class Askare extends BaseModel {
         $askareet = array();
 
         foreach ($rows as $row) {
-            $kysely = DB::connection()->prepare('SELECT DISTINCT Luokka.luokka_nimi, Luokka.luokka_id FROM'
+            $kysely = DB::connection()->prepare('SELECT DISTINCT Luokka.luokka_nimi, Luokka.luokka_id, Luokka.kayttaja_id FROM'
                     . ' Askare, Askareen_luokka, Luokka WHERE Askare.askare_id'
                     . '=Askareen_luokka.askare_id AND Luokka.luokka_id'
                     . '=Askareen_luokka.luokka_id AND Askare.askare_id=:askare_id');
@@ -27,7 +27,8 @@ class Askare extends BaseModel {
             foreach ($rivit as $rivi) {
                 $luokat[] = new Luokka(array(
                     'luokka_id' => $rivi['luokka_id'],
-                    'luokka_nimi' => $rivi['luokka_nimi']
+                    'luokka_nimi' => $rivi['luokka_nimi'],
+                    'kayttaja_id' => $rivi['kayttaja_id']
                 ));
             }
 
@@ -82,9 +83,23 @@ class Askare extends BaseModel {
         $query->execute(array('askare_id' => $this->askare_id, 'askare_nimi' => $this->askare_nimi, 'deadline' => $this->
             deadline, 'kuvaus' => $this->kuvaus));
         $row = $query->fetch();
+        
+        $tyhjennys = DB::connection()->prepare('DELETE FROM Askareen_luokka WHERE askare_id = :askare_id');
+        $tyhjennys->execute(array('askare_id' => $this->askare_id));
+        $tyhjennysrivi = $tyhjennys->fetch();
+
+        foreach ($this->luokat as $luokka) {
+            $kysely = DB::connection()->prepare('INSERT INTO Askareen_luokka(luokka_id, askare_id) VALUES (:luokka_id, :askare_id)');
+            $kysely->execute(array('askare_id' => $this->askare_id, 'luokka_id' => $luokka));
+            $rivi = $kysely->fetch();
+        }
     }
 
     public function delete() {
+        $kysely = DB::connection()->prepare('DELETE FROM Askareen_luokka WHERE askare_id = :askare_id');
+        $kysely->execute(array('askare_id' => $this->askare_id));
+        $rivi = $kysely->fetch();
+
         $query = DB::connection()->prepare('DELETE FROM Askare WHERE askare_id = :askare_id');
         $query->execute(array('askare_id' => $this->askare_id));
         $row = $query->fetch();

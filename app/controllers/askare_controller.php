@@ -20,7 +20,8 @@ class AskareController extends BaseController {
 
     public static function uusi() {
         self::check_logged_in();
-        $luokat = Luokka::all();
+        $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
+        $luokat = Luokka::all($kayttaja_id);
         Kint::dump($luokat);
         View::make('askare/uusi.html', array('luokat' => $luokat));
     }
@@ -47,30 +48,38 @@ class AskareController extends BaseController {
         $errors = $askare->errors();
         if (count($errors) == 0) {
             $askare->save();
-            Redirect::to('/askare/askarenakyma/' . $askare->askare_id, array('message' => 'Askare on nyt muistilistalla!'));        
+            Redirect::to('/askare/askarenakyma/' . $askare->askare_id, array('message' => 'Askare on nyt muistilistalla!'));
         } else {
+            $errors_luokat = Luokka::all($kayttaja_id);
             Kint::dump($luokat);
-            View::make('askare/uusi.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('askare/uusi.html', array('errors' => $errors, 'luokat' => $errors_luokat, 'attributes' => $attributes));
         }
     }
 
     public static function muokkaa($askare_id) {
         self::check_logged_in();
         $askare = Askare::find($askare_id);
-        Kint::dump($askare);
-        View::make('askare/askaremuokkaus.html', array('askare' => $askare));
+        $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
+        $luokat = Luokka::all($kayttaja_id);
+        View::make('askare/askaremuokkaus.html', array('askare' => $askare, 'luokat' => $luokat));
     }
 
     public static function paivita($askare_id) {
         self::check_logged_in();
         $params = $_POST;
+        $luokat = $params['luokat'];
 
         $attributes = array(
             'askare_id' => $askare_id,
             'askare_nimi' => $params['askare_nimi'],
             'deadline' => $params['deadline'],
-            'kuvaus' => $params['kuvaus']
+            'kuvaus' => $params['kuvaus'],
+            'luokat' => array()
         );
+
+        foreach ($luokat as $luokka) {
+            $attributes['luokat'][] = $luokka;
+        }
 
         $askare = new Askare($attributes);
         $errors = $askare->errors();
