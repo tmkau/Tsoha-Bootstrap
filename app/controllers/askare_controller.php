@@ -30,7 +30,17 @@ class AskareController extends BaseController {
         self::check_logged_in();
         $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
 
+
         $params = $_POST;
+
+        if (!array_key_exists('luokat', $params)) {
+            $attributes = array(
+                'askare_nimi' => $params['askare_nimi'],
+                'deadline' => $params['deadline'],
+                'kuvaus' => $params['kuvaus'],
+                'kayttaja_id' => $kayttaja_id
+            );
+        } else {
         $luokat = $params['luokat'];
 
         $attributes = array(
@@ -43,6 +53,8 @@ class AskareController extends BaseController {
 
         foreach ($luokat as $luokka) {
             $attributes['luokat'][] = $luokka;
+        }
+        
         }
         $askare = new Askare($attributes);
         $errors = $askare->errors();

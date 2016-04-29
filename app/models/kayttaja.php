@@ -6,6 +6,7 @@ class Kayttaja extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('kayttajanimen_validointi', 'pituusvalidointi', 'kayttajanimi_varattu', 'salasanan_validointi');
     }
 
     public static function loyda($kayttaja_id) {
@@ -40,4 +41,47 @@ class Kayttaja extends BaseModel {
         }
     }
 
-}
+    public static function uusi($kayttaja_nimi, $salasana) {
+        $kysely = DB::connection()->prepare('INSERT INTO Kayttaja (kayttaja_nimi, salasana) values (:kayttaja_nimi, :salasana) RETURNING kayttaja_id');
+        $kysely->execute(array('kayttaja_nimi' => $kayttaja_nimi, 'salasana' => $salasana));
+    }
+
+    public function kayttajanimen_validointi() {
+        $errors = array();
+        if ($this->kayttaja_nimi == '' || $this->kayttaja_nimi == null) {
+            $errors[] = 'Kayttäjänimi ei saa olla tyhjä!';
+        }
+        return $errors;
+    }
+
+    public function pituusvalidointi() {
+        $errors = array();
+        if (strlen($this->kayttaja_nimi) > 20 || strlen($this->kayttaja_nimi) < 2) {
+            $errors[] = 'Käyttäjänimen pituuden on oltava 2-20 merkkiä!';
+        }
+        return $errors;
+    }
+
+    public function kayttajanimi_varattu() {
+        $query = DB::connection()->prepare('SELECT * FROM Kayttaja');
+        $query->execute();
+        $rows = $query->fetchAll();
+        $errors = array();
+        foreach ($rows as $row) {
+            if ($this->kayttaja_nimi == $row['kayttaja_id']) {
+                $errors[] = 'Käyttäjänimi on varattu';
+            }
+        }
+        return $errors;
+    }
+
+    public function salasanan_validointi() {
+        $errors = array();
+        if (strlen($this->salasana) == 0 || $this->salasana == null) {
+            $errors[] = 'Salasana ei voi olla tyhjä';
+        } if (strlen($this->salasana) > 50 || strlen($this->salasana) < 4){
+           $errors[] = 'Salsanan pituuden on oltava 4-50 merkkiä';          
+        }
+        return $errors;
+        }
+    }

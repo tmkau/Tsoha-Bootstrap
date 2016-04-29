@@ -52,7 +52,7 @@ class LuokkaController extends BaseController {
             Redirect::to('/luokka/luokkalista', array('message' => 'Luokkaa on nyt muokattu!'));
         } else {
         //   $errors_luokat = Luokka::all($kayttaja_id);
-            View::make('luokka/lmuokkaus.html', array('errors' => $errors,'attributes' => $attributes));
+            View::make('luokka/lmuokkaus.html', array('errors' => $errors, 'luokka' => $luokka));
         }
     }
 

@@ -70,11 +70,13 @@ class Askare extends BaseModel {
         $row = $query->fetch();
         $this->askare_id = $row['askare_id'];
 
-        foreach ($this->luokat as $luokka) {
-            $kysely = DB::connection()->prepare('INSERT INTO 
+        if ($this->luokat !== null) {
+            foreach ($this->luokat as $luokka) {
+                $kysely = DB::connection()->prepare('INSERT INTO 
          Askareen_luokka(luokka_id, askare_id) VALUES (:luokka, :askare_id)');
-            $kysely->execute(array('luokka' => $luokka, 'askare_id' => $this->askare_id));
-            $rivi = $kysely->fetch();
+                $kysely->execute(array('luokka' => $luokka, 'askare_id' => $this->askare_id));
+                $rivi = $kysely->fetch();
+            }
         }
     }
 
@@ -83,7 +85,7 @@ class Askare extends BaseModel {
         $query->execute(array('askare_id' => $this->askare_id, 'askare_nimi' => $this->askare_nimi, 'deadline' => $this->
             deadline, 'kuvaus' => $this->kuvaus));
         $row = $query->fetch();
-        
+
         $tyhjennys = DB::connection()->prepare('DELETE FROM Askareen_luokka WHERE askare_id = :askare_id');
         $tyhjennys->execute(array('askare_id' => $this->askare_id));
         $tyhjennysrivi = $tyhjennys->fetch();

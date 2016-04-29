@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<h1>Tervetuloa muistilistaan!</h1>
+
+<p> Täällä voit kirjata ylös erilaisia askareitasi, luokitella ja priorisoida niitä. </p>
+
+<br>
+
+<!--<div class="alert alert-success">
+    {{message}}
+</div>-->
+<p style = "font-size: 1.3em"> Jos sinulla on jo käyttäjätunnus, kirjaudu sisään tästä:
+    <a href="{{base_path}}/kayttaja/login 
+       " class="btn btn-success">Kirjautuminen</a>
+</p>
+
+<!--<p>
+    <a href="{{base_path}}/kayttaja/uusi 
+       " class="btn btn-success">Jos sinulla ei ole käyttäjätunnusta, luo sellainen tästä:</a>
+</p>-->
+
+
+{% endblock %}
