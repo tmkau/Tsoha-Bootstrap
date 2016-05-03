@@ -39,8 +39,8 @@ class Luokka extends BaseModel {
         }
         return null;
     }
-    
-        public static function find_by_askare_id($askare_id) {
+
+    public static function find_by_askare_id($askare_id) {
         $query = DB::connection()->prepare('SELECT Luokka.luokka_nimi, Luokka.luokka_id, Luokka.kayttaja_id FROM Luokka, Askareen_luokka WHERE Askareen_luokka.luokka_id = Luokka.luokka_id AND Askareen_luokka.askare_id = :askare_id');
         $query->execute(array('askare_id' => $askare_id));
         $row = $query->fetch();
@@ -68,6 +68,9 @@ class Luokka extends BaseModel {
         if ($this->luokka_nimi == '' || $this->luokka_nimi == null) {
             $errors[] = 'Nimi ei saa olla tyhjä!';
         }
+        if (strlen($this->luokka_nimi) > 20) {
+            $errors[] = 'Nimen pitää olla alle 20 merkkiä!';
+        }
         return $errors;
     }
 
@@ -75,12 +78,12 @@ class Luokka extends BaseModel {
         $kysely = DB::connection()->prepare('DELETE FROM Askareen_luokka WHERE luokka_id = :luokka_id');
         $kysely->execute(array('luokka_id' => $this->luokka_id));
         $rivi = $kysely->fetch();
-        
+
         $query = DB::connection()->prepare('DELETE FROM Luokka WHERE luokka_id = :luokka_id');
         $query->execute(array('luokka_id' => $this->luokka_id));
         $row = $query->fetch();
     }
-    
+
     public function edit() {
         $query = DB::connection()->prepare('UPDATE Luokka SET luokka_nimi = :luokka_nimi WHERE luokka_id = :luokka_id');
         $query->execute(array('luokka_nimi' => $this->luokka_nimi, 'luokka_id' => $this->luokka_id));

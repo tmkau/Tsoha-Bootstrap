@@ -8,7 +8,6 @@ class AskareController extends BaseController {
     public static function askarenakyma($askare_id) {
         self::check_logged_in();
         $askare = Askare::find($askare_id);
-                Kint::dump($askare);
         View::make('askare/askarenakyma.html', array('askare' => $askare));
     }
 
@@ -23,7 +22,6 @@ class AskareController extends BaseController {
         self::check_logged_in();
         $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
         $luokat = Luokka::all($kayttaja_id);
-        Kint::dump($luokat);
         View::make('askare/uusi.html', array('luokat' => $luokat));
     }
 
@@ -43,21 +41,20 @@ class AskareController extends BaseController {
                 'kayttaja_id' => $kayttaja_id
             );
         } else {
-        $luokat = $params['luokat'];
+            $luokat = $params['luokat'];
 
-        $attributes = array(
-            'askare_nimi' => $params['askare_nimi'],
-            'deadline' => $params['deadline'],
-            'kuvaus' => $params['kuvaus'],
-            'prioriteetti' => $params['prioriteetti'], 
-            'kayttaja_id' => $kayttaja_id,
-            'luokat' => array()
-        );
+            $attributes = array(
+                'askare_nimi' => $params['askare_nimi'],
+                'deadline' => $params['deadline'],
+                'kuvaus' => $params['kuvaus'],
+                'prioriteetti' => $params['prioriteetti'],
+                'kayttaja_id' => $kayttaja_id,
+                'luokat' => array()
+            );
 
-        foreach ($luokat as $luokka) {
-            $attributes['luokat'][] = $luokka;
-        }
-        
+            foreach ($luokat as $luokka) {
+                $attributes['luokat'][] = $luokka;
+            }
         }
         $askare = new Askare($attributes);
         $errors = $askare->errors();
@@ -66,7 +63,6 @@ class AskareController extends BaseController {
             Redirect::to('/askare/askarenakyma/' . $askare->askare_id, array('message' => 'Askare on nyt muistilistalla!'));
         } else {
             $errors_luokat = Luokka::all($kayttaja_id);
-            Kint::dump($luokat);
             View::make('askare/uusi.html', array('errors' => $errors, 'luokat' => $errors_luokat, 'attributes' => $attributes));
         }
     }
@@ -82,19 +78,29 @@ class AskareController extends BaseController {
     public static function paivita($askare_id) {
         self::check_logged_in();
         $params = $_POST;
-        $luokat = $params['luokat'];
 
-        $attributes = array(
-            'askare_id' => $askare_id,
-            'askare_nimi' => $params['askare_nimi'],
-            'deadline' => $params['deadline'],
-            'kuvaus' => $params['kuvaus'],
-            'prioriteetti' => $params['prioriteetti'],
-            'luokat' => array()
-        );
+        if (!array_key_exists('luokat', $params)) {
 
-        foreach ($luokat as $luokka) {
-            $attributes['luokat'][] = $luokka;
+            $attributes = array(
+                'askare_id' => $askare_id,
+                'askare_nimi' => $params['askare_nimi'],
+                'deadline' => $params['deadline'],
+                'kuvaus' => $params['kuvaus'],
+                'prioriteetti' => $params['prioriteetti'],
+            );
+        } else {
+            $luokat = $params['luokat'];
+            $attributes = array(
+                'askare_id' => $askare_id,
+                'askare_nimi' => $params['askare_nimi'],
+                'deadline' => $params['deadline'],
+                'kuvaus' => $params['kuvaus'],
+                'prioriteetti' => $params['prioriteetti'],
+                'luokat' => array()
+            );
+            foreach ($luokat as $luokka) {
+                $attributes['luokat'][] = $luokka;
+            }
         }
 
         $askare = new Askare($attributes);
@@ -103,7 +109,8 @@ class AskareController extends BaseController {
             View::make('askare/askaremuokkaus.html', array('errors' => $errors, 'askare' => $askare));
         } else {
             $askare->update();
-            Redirect::to('/askare/askarenakyma/' . $askare->askare_id, array('message' => 'Askaretta on muokattu, jee!'));
+            $errors_luokat = Luokka::all($kayttaja_id);
+            Redirect::to('/askare/askarenakyma/' . $askare->askare_id, array('luokat' => $errors_luokat, 'message' => 'Askaretta on muokattu, jee!'));
         }
     }
 
