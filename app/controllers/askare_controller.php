@@ -72,11 +72,18 @@ class AskareController extends BaseController {
         $askare = Askare::find($askare_id);
         $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
         $luokat = Luokka::all($kayttaja_id);
-        View::make('askare/askaremuokkaus.html', array('askare' => $askare, 'luokat' => $luokat));
+        $askareen_luokat = array();       
+        $askareen_luokat1 = Luokka::find_by_askare_id($askare_id);
+        foreach($askareen_luokat1 as $askareen_luokka1) {
+            $askareen_luokat[] = $askareen_luokka1 -> luokka_id;         
+        }
+   
+        View::make('askare/askaremuokkaus.html', array('askare' => $askare, 'luokat' => $luokat, 'askareen_luokat' => $askareen_luokat));
     }
 
     public static function paivita($askare_id) {
         self::check_logged_in();
+        $kayttaja_id = self::get_user_logged_in()->kayttaja_id;
         $params = $_POST;
 
         if (!array_key_exists('luokat', $params)) {

@@ -43,16 +43,18 @@ class Luokka extends BaseModel {
     public static function find_by_askare_id($askare_id) {
         $query = DB::connection()->prepare('SELECT Luokka.luokka_nimi, Luokka.luokka_id, Luokka.kayttaja_id FROM Luokka, Askareen_luokka WHERE Askareen_luokka.luokka_id = Luokka.luokka_id AND Askareen_luokka.askare_id = :askare_id');
         $query->execute(array('askare_id' => $askare_id));
-        $row = $query->fetch();
-
-        if ($row) {
-            $luokka = new Luokka(array(
-                'luokka_id' => $row['luokka_id'],
-                'luokka_nimi' => $row['luokka_nimi'],
-                'kayttaja_id' => $row['kayttaja_id']
-            ));
-            return $luokka;
-        }
+        $rows = $query->fetchAll();
+        $luokat = array();
+        if ($rows) {
+            foreach ($rows as $row) {
+                $luokat[] = new Luokka(array(
+                    'luokka_id' => $row['luokka_id'],
+                    'luokka_nimi' => $row['luokka_nimi'],
+                    'kayttaja_id' => $row['kayttaja_id']
+                ));
+            }
+            return $luokat;
+        } 
         return null;
     }
 

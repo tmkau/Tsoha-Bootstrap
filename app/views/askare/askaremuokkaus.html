@@ -26,17 +26,24 @@
         <label>Kuvaus</label>
         <input name ="kuvaus" class="form-control" value="{{askare.kuvaus}}">
     </div>
-        <div class="form-group">
-        <label>Prioriteetti, asteikolla 1-10</label>
+    <div class="form-group">
+        <label>Prioriteetti, asteikolla 0-> </label>
         <input name ="prioriteetti" class="form-control" value="{{askare.prioriteetti}}">
     </div>
     <label> Askareen luokat </label>
     {% for luokka in luokat %}
-    <div class="form-group"> 
-        <label><input name ="luokat[]" type ="checkbox" value=
+
+    <div class="form-group">  
+        {% if luokka.luokka_id in askareen_luokat %}
+        <label><input name ="luokat[]" type ="checkbox" checked value=
                       "{{luokka.luokka_id}}"> {{luokka.luokka_nimi}}</label>
+        {% else %}
+        <label><input name ="luokat[]" type ="checkbox" value=
+                      "{{luokka.luokka_id}}"> {{luokka.luokka_nimi}}</label>  
+        {% endif %} 
     </div>
     {% endfor %}
+
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Tallenna</button>
     </div>
