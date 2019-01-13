@@ -1,5 +1,7 @@
 # Tietokantasovelluksen esittelysivu
 
+HUOM TIETOKANNAN KÄYTTÖLIITTYMÄ RIKKI PALVELIMEN PÄIVYTYKSISTÄ JOHTUEN, PROJEKTI ON 3 JO VUOTTA VANHA. 
+
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://katukatu.users.cs.helsinki.fi/tsoha_tmkau)
